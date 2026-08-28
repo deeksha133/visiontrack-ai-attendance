@@ -48,6 +48,11 @@ def init_db():
     connection.commit()
 
 
+# Initialize SQLite when Gunicorn imports the application on Render.
+with app.app_context():
+    init_db()
+
+
 def engine():
     return FaceEngine(
         app.config["FACE_DATA"], app.config["MODEL_PATH"], app.config["LABELS_PATH"]
